@@ -1,8 +1,9 @@
 <script setup>
-//Me quede en el minuto 55:10 del tutorial de Crash Course de Vuejs
 import Navbar from "./components/Navbar.vue";
+import Hero from "@/components/Hero.vue";
 </script>
 
 <template>
   <Navbar />
+  <Hero />
 </template>
