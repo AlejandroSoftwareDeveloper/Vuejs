@@ -1,7 +1,8 @@
 <script setup>
-   //Me quede en el minuto 55:10 del tutorial de Crash Course de Vuejs
+//Me quede en el minuto 55:10 del tutorial de Crash Course de Vuejs
+import Navbar from "./components/Navbar.vue";
 </script>
 
 <template>
-  <h1>Trabajos de vue</h1>
+  <Navbar />
 </template>
