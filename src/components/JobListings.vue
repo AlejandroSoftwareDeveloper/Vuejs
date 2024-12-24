@@ -25,6 +25,5 @@ defineProps({
         :job="job"
       />
     </div>
-    <!-- Aqui va el componente de JobCard  -->
   </section>
 </template>
