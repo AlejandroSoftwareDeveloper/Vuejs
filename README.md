@@ -1,6 +1,6 @@
 # Front de Vuejs para la gestion de la contratacion de desarrolladores
 
-Sistema frontend para la gestion de contratacion trabajo de desarrolladores de software
+Sistema frontend para la gestion de contratacion de desarrolladores de software.
 
 ## Instalacion del IDE
 
@@ -10,7 +10,7 @@ Sistema frontend para la gestion de contratacion trabajo de desarrolladores de s
 
 Ver [Referencia de Configuracion de Vite](https://vite.dev/config/).
 
-## Instalacion del Proyecto
+## Instalacion del proyecto
 
 ```sh
 npm install
@@ -22,9 +22,7 @@ npm install
 npm run dev
 ```
 
-### Compile and Minify for Production
-
-### Compilacion y Minificaion en Produccion
+### Compilacion y Minificacion en Produccion
 
 ```sh
 npm run build
