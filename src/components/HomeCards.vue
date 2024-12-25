@@ -6,6 +6,7 @@ defineProps({
     default:"jobs",
   },
 })
+
 </script>
 <template>
   <section class="py-4">
@@ -18,7 +19,7 @@ defineProps({
           </p>
           <a :href="`/${route}`" class="inline-block px-4 py-2 text-white bg-black rounded-lg hover:bg-gray-700">Buscar trabajo</a>
         </Card>
-        <Card bg="green-100">
+        <Card bg="bg-green-100">
           <h2 class="text-2xl font-bold">Para contratistas</h2>
           <p class="mt-2 mb-4">
              Liste sus trabajos para encontrar el desarrollador deseado. 

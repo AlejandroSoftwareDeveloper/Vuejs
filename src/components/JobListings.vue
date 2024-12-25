@@ -1,7 +1,7 @@
 <script setup>
 import JobCard from "@/components/JobCard.vue";
 import JobData from "@/jobs.json";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 const jobs = ref(JobData);
 
 defineProps({
@@ -9,6 +9,14 @@ defineProps({
     type: Number,
   },
 });
+
+let showFullDescripction = ref(false);
+
+//TODO me quede aqui  [1:27:45]
+let truncateDescicption = computed(()=>{
+  let dsc = jobs
+})
+
 </script>
 
 <template>
