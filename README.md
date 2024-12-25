@@ -1,28 +1,28 @@
-# vuejslearning
+# Front de Vuejs para la gestion de la contratacion de desarrolladores
 
-This template should help get you started developing with Vue 3 in Vite.
+Sistema frontend para la gestion de contratacion de desarrolladores de software.
 
-## Recommended IDE Setup
+## Instalacion del IDE
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
 
-## Customize configuration
+## Personalizar configuracion
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Ver [Referencia de Configuracion de Vite](https://vite.dev/config/).
 
-## Project Setup
+## Instalacion del proyecto
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Compilacion y Hot-Reload en el desarrollo
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Compilacion y Minificacion en Produccion
 
 ```sh
 npm run build
