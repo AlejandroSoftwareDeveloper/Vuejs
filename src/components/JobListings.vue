@@ -10,12 +10,6 @@ defineProps({
   },
 });
 
-let showFullDescripction = ref(false);
-
-//TODO me quede aqui  [1:27:45]
-let truncateDescicption = computed(()=>{
-  let dsc = jobs
-})
 
 </script>
 
