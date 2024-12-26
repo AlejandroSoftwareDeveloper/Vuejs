@@ -1,7 +1,7 @@
 <script setup>
 import JobCard from "@/components/JobCard.vue";
 import JobData from "@/jobs.json";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 const jobs = ref(JobData);
 
 defineProps({
