@@ -2,6 +2,7 @@
 import axios from 'axios'
 import router from '@/router'
 import { reactive } from 'vue'
+import { useToast } from 'vue-toastification';
 
 const form = reactive({
   type:"Tiempo-completo",
@@ -16,6 +17,7 @@ const form = reactive({
     contactPhone:"",
   },
 })
+const toast = useToast();
 
 const handleSubmit = async () => {
   const newJob = {
@@ -35,13 +37,13 @@ const handleSubmit = async () => {
 
   try {
      const response = await axios.post('/api/jobs',newJob);
+     toast.success("Se guardo correctamente la nueva oferta de trabajo.");
      router.push(`/jobs/${response.data.id}`);
     
   } catch(error){
     console.error("Error obteniendo el trabajo",error);
+     toast.error("No se pudo guardar la oferta de trabajo.");
   }
-
-
 }
 
 </script>

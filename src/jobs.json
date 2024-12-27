@@ -111,20 +111,6 @@
         "contactEmail": "as@asd.com",
         "contactPhone": "12123123"
       }
-    },
-    {
-      "id": "2038",
-      "type": "Tiempo-completo",
-      "title": "asdas",
-      "description": "asdasd",
-      "salary": "Debajo de $500 mlc",
-      "location": "asdad",
-      "company": {
-        "name": "asdasd",
-        "description": "asdasd",
-        "contactEmail": "asd@Gamil.com",
-        "contactPhone": "1212345589"
-      }
     }
   ]
 }
