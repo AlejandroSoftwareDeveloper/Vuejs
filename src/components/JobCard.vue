@@ -17,7 +17,6 @@ let truncateDescription = computed(()=>{
 })
 
 let showAndHide = computed(() => {showFullDescripction.value = !showFullDescripction.value;});
-//  @mouseover="expandOrDecreaseDialog" @mouseleave="expandOrDecreaseDialog"
 </script>
 <template>
   <div class="relative bg-white shadow-md rounded-xl" >
@@ -37,7 +36,7 @@ let showAndHide = computed(() => {showFullDescripction.value = !showFullDescripc
           <i class="text-lg text-orange-500 fa-solid fa-location-dot pi pi-map-marker"></i>
           {{ job.location }}
         </div>
-        <RouterLink to="'/job/' + job.id" class="h-[36px] bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center text-sm"> Leer mas</RouterLink>
+        <RouterLink to="/jobs/ + job.id" class="h-[36px] bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center text-sm"> Leer mas</RouterLink>
       </div>
     </div>
   </div>
