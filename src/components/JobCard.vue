@@ -33,10 +33,10 @@ let showAndHide = computed(() => {showFullDescripction.value = !showFullDescripc
       <div class="mb-5 border border-gray-100"></div>
       <div class="flex flex-col justify-between mb-4 lg:flex-row">
         <div class="mb-3 text-orange-700">
-          <i class="text-lg text-orange-500 fa-solid fa-location-dot pi pi-map-marker"></i>
+          <i class="text-lg text-orange-500  pi pi-map-marker"></i>
           {{ job.location }}
         </div>
-        <RouterLink to="/jobs/ + job.id" class="h-[36px] bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center text-sm"> Leer mas</RouterLink>
+        <RouterLink :to="`/jobs/${job.id}`" class="h-[36px] bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center text-sm"> Leer mas</RouterLink>
       </div>
     </div>
   </div>

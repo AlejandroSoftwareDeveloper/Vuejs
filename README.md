@@ -2,10 +2,6 @@
 
 Sistema frontend para la gestion de contratacion de desarrolladores de software.
 
-## Instalacion del IDE
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-
 ## Personalizar configuracion
 
 Ver [Referencia de Configuracion de Vite](https://vite.dev/config/).
@@ -19,7 +15,9 @@ npm install
 ### Compilacion y Hot-Reload en el desarrollo
 
 ```sh
-npm run dev
+npm run dev    #Para el server de vuejs en el puerto 3000
+npm run server #Para el server de json en el puerto 5000
+
 ```
 
 ### Compilacion y Minificacion en Produccion

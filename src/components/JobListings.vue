@@ -1,8 +1,12 @@
 <script setup>
 import JobCard from "@/components/JobCard.vue";
-import JobData from "@/jobs.json";
-import { ref } from "vue";
-const jobs = ref(JobData);
+import { ref,onMounted } from "vue";
+import axios from "axios";
+// import JobData from "@/jobs.json";
+
+//"http://localhost:5000/jobs" URL BASE
+
+const jobs = ref([]);
 
 defineProps({
   limit: {
@@ -10,7 +14,14 @@ defineProps({
   },
 });
 
-
+onMounted(async () => {
+  try {
+    const response = await axios.get("/api/jobs")
+    jobs.value = response.data;
+  } catch(error){
+    console.error("Error obteniendo lista de trabajos",error);
+  }
+})
 </script>
 
 <template>

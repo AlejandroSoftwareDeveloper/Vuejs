@@ -24,7 +24,7 @@ const isActiveLink = (routePath) => useRoute().path == routePath;
             <div class="flex space-x-2">
               <RouterLink to="/" :class="[isActiveLink('/') ? 'bg-green-900' : '', 'hover:bg-gray-900','px-3', 'py-2', 'text-white', 'rounded-md', 'hover:text-white']" >Inicio</RouterLink>
               <RouterLink to="/jobs" :class="[isActiveLink('/jobs') ? 'bg-green-900' : '', 'hover:bg-gray-900','px-3', 'py-2', 'text-white', 'rounded-md', 'hover:text-white']">Trabajos</RouterLink>
-              <RouterLink to="/job/add" :class="[isActiveLink('/job/add') ? 'bg-green-900' : '', 'hover:bg-gray-900','px-3', 'py-2', 'text-white', 'rounded-md', 'hover:text-white']">Crear trabajo</RouterLink>
+              <RouterLink to="/add/job" :class="[isActiveLink('/job/add') ? 'bg-green-900' : '', 'hover:bg-gray-900','px-3', 'py-2', 'text-white', 'rounded-md', 'hover:text-white']">Crear trabajo</RouterLink>
             </div>
           </div>
         </div>

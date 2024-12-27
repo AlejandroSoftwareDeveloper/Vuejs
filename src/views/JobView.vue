@@ -1,40 +1,55 @@
-<script setup></script>
+<script setup>
+import BackButton from '@/components/BackButton.vue';
+import { onMounted,ref } from 'vue';
+import { RouterLink, useRoute } from 'vue-router';
+import axios from 'axios';
+
+const route = useRoute();
+const job = ref({});
+const company = ref({});
+let jobid = route.params.id;
+
+
+onMounted(async () => {
+  try {
+    const response = await axios.get(`/api/jobs/${jobid}`)
+    job.value = response.data;
+    company.value = job.value.company;
+    console.log(company.value);
+  } catch(error){
+    console.error("Error obteniendo el trabajo",error);
+  }
+})
+</script>
 
 <template>
+<BackButton />
 <section class="bg-green-50">
       <div class="container px-6 py-10 m-auto">
         <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-70/30">
           <main>
-            <div
-              class="p-6 text-center bg-white rounded-lg shadow-md md:text-left"
-            >
-              <div class="mb-4 text-gray-500">Full-Time</div>
-              <h1 class="mb-4 text-3xl font-bold">Senior Vue Developer</h1>
-              <div
-                class="flex justify-center mb-4 text-gray-500 align-middle md:justify-start"
-              >
-                <i
-                  class="mr-2 text-lg text-orange-700 fa-solid fa-location-dot"
-                ></i>
-                <p class="text-orange-700">Boston, MA</p>
+            <div class="p-6 text-center bg-white rounded-lg shadow-md md:text-left">
+              <div class="mb-4 text-gray-500">{{ job.type }} </div>
+              <h1 class="mb-4 text-3xl font-bold">{{ job.title }}</h1>
+              <div class="flex justify-center mb-4 text-gray-500 align-middle md:justify-start">
+                  <i class="mr-2 text-lg text-orange-700 pi pi-map-marker"></i>
+                <p class="text-orange-700">{{ job.location }}</p>
               </div>
             </div>
 
             <div class="p-6 mt-6 bg-white rounded-lg shadow-md">
               <h3 class="mb-6 text-lg font-bold text-green-800">
-                Job Description
+                Descripcion del trabajo
               </h3>
 
               <p class="mb-4">
-                We are seeking a talented Front-End Developer to join our team
-                in Boston, MA. The ideal candidate will have strong skills in
-                HTML, CSS, and JavaScript, with experience working with modern
-                JavaScript frameworks such as Vue or Angular.
+                {{ job.description }}
               </p>
 
-              <h3 class="mb-2 text-lg font-bold text-green-800">Salary</h3>
+              <h3 class="mb-2 text-lg font-bold text-green-800">Salario</h3>
 
-              <p class="mb-4">$70k - $80K / Year</p>
+              <p class="mb-4">{{ job.salary }}</p>
+              <p class="mb-4">{{ company.name }}</p>
             </div>
           </main>
 
@@ -42,46 +57,39 @@
           <aside>
             <!-- Company Info -->
             <div class="p-6 bg-white rounded-lg shadow-md">
-              <h3 class="mb-6 text-xl font-bold">Company Info</h3>
+              <h3 class="mb-6 text-xl font-bold">Informacion de la Compania</h3>
 
-              <h2 class="text-2xl">NewTek Solutions</h2>
+              <h2 class="text-2xl">{{ company.name }}</h2>
 
               <p class="my-2">
-                NewTek Solutions is a leading technology company specializing in
-                web development and digital solutions. We pride ourselves on
-                delivering high-quality products and services to our clients
-                while fostering a collaborative and innovative work environment.
+                {{ company.description }}
               </p>
 
               <hr class="my-4" />
 
-              <h3 class="text-xl">Contact Email:</h3>
+              <h3 class="text-xl">Correo electronico:</h3>
 
               <p class="p-2 my-2 font-bold bg-green-100">
-                contact@newteksolutions.com
+                {{ company.contactEmail }}
               </p>
 
-              <h3 class="text-xl">Contact Phone:</h3>
+              <h3 class="text-xl">Telefono de contacto:</h3>
 
-              <p class="p-2 my-2 font-bold bg-green-100">555-555-5555</p>
+              <p class="p-2 my-2 font-bold bg-green-100"> {{ company.contactPhone }}</p>
             </div>
 
-            <!-- Manage -->
             <div class="p-6 mt-6 bg-white rounded-lg shadow-md">
-              <h3 class="mb-6 text-xl font-bold">Manage Job</h3>
-              <a
-                href="add-job.html"
+              <h3 class="mb-6 text-xl font-bold">Gestionar trabajo</h3>
+              <RouterLink
+                :to="`/jobs/edit/${job.id}`"
                 class="block w-full px-4 py-2 mt-4 font-bold text-center text-white bg-green-500 rounded-full hover:bg-green-600 focus:outline-none focus:shadow-outline"
-                >Edit Job</a
-              >
-              <button
-                class="block w-full px-4 py-2 mt-4 font-bold text-white bg-red-500 rounded-full hover:bg-red-600 focus:outline-none focus:shadow-outline"
-              >
-                Delete Job
+                >Editar trabajo</RouterLink>
+              <button class="block w-full px-4 py-2 mt-4 font-bold text-white bg-red-500 rounded-full hover:bg-red-600 focus:outline-none focus:shadow-outline">
+                Borrar trabajo
               </button>
             </div>
           </aside>
         </div>
       </div>
-    </section>
+  </section>
 </template>
