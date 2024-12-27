@@ -1,4 +1,5 @@
 <script setup>
+  //Este es un archivo de prueba que eliminar despues
   import { ref,onMounted } from 'vue';
         const nombre = ref("Alejandro");
         const edad = ref(39);
