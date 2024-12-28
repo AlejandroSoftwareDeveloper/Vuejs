@@ -3,10 +3,10 @@
     {
       "id": "1",
       "title": "Desarrollador Web Senior",
-      "type": "Tiempo completo",
+      "type": "Tiempo-completo",
       "description": "Estamos en busqueda de un talentos de desarrollades de Front-End para que se unan a nuestro equipo. Se busca habilidades fuertes en HTML, CSS y javascript con experiencia en marcos de trabajo como Vue y Angularjs",
       "location": "La Habana",
-      "salary": "300 mlc a 500 mlc al mes",
+      "salary": "$600 mlc - $700 mlc",
       "company": {
         "name": "Soluciones Tecnicas e Informaticas",
         "description": "Compania cubana de soluciones informaticas",
@@ -15,26 +15,26 @@
       }
     },
     {
-      "id": "2",
+      "type": "Medio-tiempo",
       "title": "Desarrollador Backend Senior",
-      "type": "Tiempo parcial",
       "description": "Estamos en busqueda de un talentos de desarrollades de Back-End para que se unan a nuestro equipo. Se busca habilidades fuertes en javascript, bases de datos relacionales, python y con experiencia en marcos de trabajo Django y Nestjs",
+      "salary": "$600 mlc - $700 mlc",
       "location": "La Habana",
-      "salary": "300 mlc a 500 mlc al mes",
       "company": {
         "name": "Soluciones Tecnicas e Informaticas",
-        "description": "Compania cubana de soluciones informaticas",
+        "description": "Compania cubana de soluciones informaticas.",
         "contactEmail": "cubansolutions@gmail.com",
         "contactPhone": "555-555-5555"
-      }
+      },
+      "id": "2"
     },
     {
       "id": "3",
       "title": "Devops ",
-      "type": "Tiempo completo",
+      "type": "Tiempo-completo",
       "description": "Estamos en busqueda de un devops con experiencia en Kubernetes, Docker y AWS, Azure o Google Cloud ",
       "location": "La Habana",
-      "salary": "500 mlc a 800 mlc al mes",
+      "salary": "Mas de $2000 mlc",
       "company": {
         "name": "Soluciones Tecnicas e Informaticas",
         "description": "Compania cubana de soluciones informaticas",
@@ -45,10 +45,10 @@
     {
       "id": "4",
       "title": "Desarrollador Web Senior",
-      "type": "Tiempo completo",
+      "type": "Tiempo-completo",
       "description": "Estamos en busqueda de un talentos de desarrollades de Front-End para que se unan a nuestro equipo. Se busca habilidades fuertes en HTML, CSS y javascript con experiencia en marcos de trabajo como Vue y Angularjs",
       "location": "La Habana",
-      "salary": "300 mlc a 500 mlc al mes",
+      "salary": "$500 mlc - $600 mlc",
       "company": {
         "name": "Soluciones Tecnicas e Informaticas",
         "description": "Compania cubana de soluciones informaticas",

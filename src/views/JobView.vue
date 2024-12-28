@@ -19,7 +19,6 @@ onMounted(async () => {
     const response = await axios.get(`/api/jobs/${jobid}`)
     job.value = response.data;
     company.value = job.value.company;
-    console.log(company.value);
   } catch(error){
     console.error("Error obteniendo el trabajo",error);
   }

@@ -2,13 +2,14 @@
 import axios from 'axios'
 import router from '@/router'
 import { reactive,onMounted } from 'vue'
+import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
 const form = reactive({
-  type:"Tiempo-completo",
+  type:"",
   title:"",
   description:"",
-  salary:"Debajo de $500 mlc",
+  salary:"",
   location:"",
   company:{
     name:"",
@@ -18,11 +19,32 @@ const form = reactive({
   },
 })
 
-onMounted(() => {
-  
+const route = useRoute();
+const toast = useToast();
+const jobid = route.params.id;
+
+onMounted(async () => {
+     try{
+     const response = await axios.get(`/api/jobs/${jobid}`);
+      let tmp = response.data;
+      form.type = tmp.type;
+      form.title = tmp.title;
+      form.description = tmp.description;
+      form.salary = tmp.salary;
+      form.location = tmp.location;
+      form.company.name = tmp.company.name;
+      form.company.description =  tmp.company.description;
+      form.company.contactEmail = tmp.company.contactEmail;
+      form.company.contactPhone = tmp.company.contactPhone;
+   } catch(error){
+      console.log("No se pudo cargar la informacion del trabajo con id " + jobid);
+      toast.error("Error al cargar la informacion del trabajo.");
+   }
+
 })
 
-const toast = useToast();
+
+
 
 const handleSubmit = async () => {
   const editJob = {
@@ -42,9 +64,8 @@ const handleSubmit = async () => {
 
   try {
      const response = await axios.put(`/api/jobs/${jobid}`,editJob);
-     toast.success("Se edito correctamente la nueva oferta de trabajo.");
+     toast.success("Se edito correctamente la oferta de trabajo.");
      router.push(`/jobs/${response.data.id}`);
-    
   } catch(error){
     console.error("Error obteniendo el trabajo",error);
      toast.error("No se pudo guardar la oferta de trabajo.");
@@ -60,7 +81,7 @@ const handleSubmit = async () => {
           class="px-6 py-8 m-4 mb-4 bg-white border rounded-md shadow-md md:m-0"
         >
           <form @submit.prevent="handleSubmit">
-            <h2 class="mb-6 text-3xl font-semibold text-center">Adicionar trabajo</h2>
+            <h2 class="mb-6 text-3xl font-semibold text-center">Actualizar trabajo</h2>
             <div class="mb-4">
               <label for="type" class="block mb-2 font-bold text-gray-700"
                 >Tipo de trabajo</label
@@ -215,7 +236,7 @@ const handleSubmit = async () => {
                 class="w-full px-4 py-2 font-bold text-white bg-green-500 rounded-full hover:bg-green-600 focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Guardar Trabajo
+                Actualizar Trabajo
               </button>
             </div>
           </form>
