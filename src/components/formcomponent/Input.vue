@@ -1,47 +1,36 @@
 <script setup>
 defineProps({
-    label:{
+    labeltext:{
         type:String,
-        default:"Lista de nombres de trabajos"
+        default:"Nombre"
     },
-    labelclass:{
+    type:{
         type:String,
-        default:"block mb-2 font-bold text-gray-700",
+        default:"text"
     },
-    inputtype:{
+    id:{
         type:String,
-        default:"text",
+        default:"name"
     },
-    inputname: {
+    value:{
         type:String,
-        default:"name",
-    },
-    inputid: {
-        type:String,
-        default:"name",
-    },
-    inputclass: {
-        type:String,
-        default:"w-full px-3 py-2 mb-2 border rounded",
-    },
-    placeholder: {
-        type:String,
-        default:"Ejemplo: Desarrollador frontend",
-    },
+        default:""
+    }
 });
 
 </script>
 <template>
 <div class="mb-4">
-    <label class="block mb-2 font-bold text-gray-700">Lista de tipos de trabajos</label>
+    <label class="block mb-2 font-bold text-gray-700">{{ labeltext }}</label>
     <input
-    type="text"
-    id="name"
-    name="name"
+    :type="type"
+    :id="id"
+    :name="id"
     class="w-full px-3 py-2 mb-2 border rounded "
     placeholder="Ejemplo: Desarrollador frontend"
     required
     />
+    <slot />
 </div>
 
 </template>

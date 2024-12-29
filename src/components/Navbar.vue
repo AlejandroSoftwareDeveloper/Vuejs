@@ -1,12 +1,8 @@
 <script setup>
 import { RouterLink, useRoute } from "vue-router";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/img/logo.png";
 
 const isActiveLink = (routePath) => useRoute().path == routePath;
-//TODO Minuto 1:48:51
-/*
-//Propiedades = ['px-3', 'py-2', 'text-white', 'bg-green-900', 'rounded-md', 'hover:bg-gray-900', 'hover:text-white']
-*/
 </script>
 
 <template>
@@ -24,7 +20,8 @@ const isActiveLink = (routePath) => useRoute().path == routePath;
             <div class="flex space-x-2">
               <RouterLink to="/" :class="[isActiveLink('/') ? 'bg-green-900' : '', 'hover:bg-gray-900','px-3', 'py-2', 'text-white', 'rounded-md', 'hover:text-white']" >Inicio</RouterLink>
               <RouterLink to="/jobs" :class="[isActiveLink('/jobs') ? 'bg-green-900' : '', 'hover:bg-gray-900','px-3', 'py-2', 'text-white', 'rounded-md', 'hover:text-white']">Trabajos</RouterLink>
-              <RouterLink to="/add/job" :class="[isActiveLink('/job/add') ? 'bg-green-900' : '', 'hover:bg-gray-900','px-3', 'py-2', 'text-white', 'rounded-md', 'hover:text-white']">Crear trabajo</RouterLink>
+              <RouterLink to="/add/job" :class="[isActiveLink('/add/job') ? 'bg-green-900' : '', 'hover:bg-gray-900','px-3', 'py-2', 'text-white', 'rounded-md', 'hover:text-white']">Crear trabajo</RouterLink>
+              <RouterLink to="/validation" :class="[isActiveLink('/add/job') ? 'bg-green-900' : '', 'hover:bg-gray-900','px-3', 'py-2', 'text-white', 'rounded-md', 'hover:text-white']">Vista de validacion</RouterLink>
             </div>
           </div>
         </div>
