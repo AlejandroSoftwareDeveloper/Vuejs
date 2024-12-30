@@ -1,246 +1,206 @@
 <script setup>
+import * as z from 'zod';
+import { useForm, useField } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
 import axios from 'axios'
-import router from '@/router'
-import { reactive,onMounted } from 'vue'
-import { useRoute } from 'vue-router';
+import { onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
+import HelperClass from '@/assets/js/Helperclass';
+import ErrorMessage from '@/components/ErrorMessage.vue';
+import SubmitButton from '@/components/formcomponent/SubmitButton.vue';
+import InputBlock from '@/components/formcomponent/InputBlock.vue';
 
-const form = reactive({
-  type:"",
-  title:"",
-  description:"",
-  salary:"",
-  location:"",
-  company:{
-    name:"",
-    description:"",
-    contactEmail:"",
-    contactPhone:"",
-  },
-})
-
-const route = useRoute();
+const hp = new HelperClass();
+const salaries = hp.salaryoptions()
+const types = hp.worktype()
 const toast = useToast();
+const route = useRoute();
+const router = useRouter();
 const jobid = route.params.id;
 
-onMounted(async () => {
-     try{
-     const response = await axios.get(`/api/jobs/${jobid}`);
-      let tmp = response.data;
-      form.type = tmp.type;
-      form.title = tmp.title;
-      form.description = tmp.description;
-      form.salary = tmp.salary;
-      form.location = tmp.location;
-      form.company.name = tmp.company.name;
-      form.company.description =  tmp.company.description;
-      form.company.contactEmail = tmp.company.contactEmail;
-      form.company.contactPhone = tmp.company.contactPhone;
-   } catch(error){
-      console.log("No se pudo cargar la informacion del trabajo con id " + jobid);
-      toast.error("Error al cargar la informacion del trabajo.");
-   }
+const { errors, defineField, handleSubmit } = useForm({
+  validationSchema: toTypedSchema(
+    z.object({
+      title: z.string({ required_error: "El campo tipo de trabajo es requerido" })
+        .nonempty({ message: "El campo tipo de trabajo no puede quedar vacio." })
+        .min(5, { message: "El campo tipo de trabajo debe contener al menos 5 caracter." })
+        .max(50, { message: "El campo tipo de trabajo no debe contener mas de 50 caracteres." }),
 
+      description: z.string({ required_error: "El campo description es requerido" })
+        .nonempty({ message: "El campo descripcion no puede quedar vacio." })
+        .min(20, { message: "El campo descripcion debe contener no menos de 20 caracteres." })
+        .max(255, { message: "El campo descripcion no debe contener mas 255 caracteres." }),
+
+      location: z.string({ required_error: "El campo direccion de la empresa es requerido." })
+        .nonempty({ message: "El campo direccion de la empresa no puede quedar vacio." })
+        .min(10, { message: "El campo direccion de la empresa no debe contener menos de 10 caracteres." })
+        .max(255, { message: "El campo direccion de la empresa no debe contener mas de 255 caracteres." }),
+
+      name: z.string({ required_error: "El campo nombre de la compania es requerido" })
+        .nonempty({ message: "El campo nombre de la empresa no puede quedar vacio." })
+        .min(5, { message: "El campo nombre de la empresa no debe contener menos de 5 caracteres." })
+        .max(255, { message: "El campo nombre de la empresa no debe contener mas de 255 caracteres." }),
+
+      cdescription: z.string({ required_error: "El campo descripcion de la compania es requerido" })
+        .nonempty({ message: "El campo descripcion de la compania no puede quedar vacio." })
+        .min(5, { message: "El campo descripcion de la compania no debe contener menos de 5 caracteres." })
+        .max(255, { message: "El campo descripcion de la compania no debe contener mas de 255 caracteres." }),
+
+      contactEmail: z.string({ required_error: "El campo correo electronico de la compania es requerido" })
+        .nonempty({ message: "El campo correo electronico de la compania no puede quedar vacio." })
+        .email({ message: "El correo no es correcto" }),
+
+      contactPhone: z.string({ required_error: "El campo telefono de contacto de la compania es requerido." })
+        .nonempty({ message: "El campo telefono de la compania no puede quedar vacio." })
+        .min(8, { message: "El campo telefono de la empresa no debe contener menos de 8 caracteres." })
+        .max(255, { message: "El campo telefono de la empresa no debe contener mas de 255 caracteres." }),
+    }),
+  ),
+});
+
+const [type, typeAttrs] = defineField('type');
+const [title, titleAttrs] = defineField('title');
+const [description, descriptionAttrs] = defineField('description');
+const [salary, salaryAttrs] = defineField('salary');
+const [location, locationAttrs] = defineField('location');
+const [name, nameAttrs] = defineField('name');
+const [cdescription, cdescriptionAttrs] = defineField('cdescription');
+const [contactEmail, contactEmailAttrs] = defineField('contactEmail');
+const [contactPhone, contactPhoneAttrs] = defineField('contactPhone');
+
+// type.value = "Tiempo-completo"
+// salary.value = "Debajo de $500 mlc"
+
+
+onMounted(async () => {
+  try {
+    const response = await axios.get(`/api/jobs/${jobid}`);
+    let tmp = response.data;
+
+    type.value = tmp.type;
+    title.value = tmp.title;
+    description.value = tmp.description;
+    salary.value = tmp.salary;
+    location.value = tmp.location;
+    name.value = tmp.company.name;
+    cdescription.value = tmp.company.description;
+    contactEmail.value = tmp.company.contactEmail;
+    contactPhone.value = tmp.company.contactPhone;
+  } catch (error) {
+    console.log("No se pudo cargar la informacion del trabajo con id " + jobid);
+    toast.error("Error al cargar la informacion del trabajo.");
+  }
 })
 
-
-
-
-const handleSubmit = async () => {
+const saveData = handleSubmit(async () => {
   const editJob = {
-    type:form.type,
-    title:form.title,
-    description:form.description,
-    salary:form.salary,
-    location:form.location,
-    company:{
-      name:form.company.name,
-      description:form.company.description,
-      contactEmail:form.company.contactEmail,
-      contactPhone:form.company.contactPhone,
+    type: type.value,
+    title: title.value.trim(),
+    salary: salary.value,
+    description: description.value.trim(),
+    location: location.value.trim(),
+    company: {
+      name: name.value.trim(),
+      description: cdescription.value.trim(),
+      contactEmail: contactEmail.value.trim(),
+      contactPhone: contactPhone.value.trim(),
     }
   }
-  
 
   try {
-     const response = await axios.put(`/api/jobs/${jobid}`,editJob);
-     toast.success("Se edito correctamente la oferta de trabajo.");
-     router.push(`/jobs/${response.data.id}`);
-  } catch(error){
-    console.error("Error obteniendo el trabajo",error);
-     toast.error("No se pudo guardar la oferta de trabajo.");
+    const response = await axios.put(`/api/jobs/${jobid}`, editJob);
+    toast.success("Se edito correctamente la oferta de trabajo.");
+    router.push(`/jobs/${response.data.id}`);
+  } catch (error) {
+    console.error("Error obteniendo el trabajo", error);
+    toast.error("No se pudo guardar la oferta de trabajo.");
   }
-}
+})
 
 </script>
 
+
 <template>
-<section class="bg-green-50">
-      <div class="container max-w-2xl py-24 m-auto">
-        <div
-          class="px-6 py-8 m-4 mb-4 bg-white border rounded-md shadow-md md:m-0"
-        >
-          <form @submit.prevent="handleSubmit">
-            <h2 class="mb-6 text-3xl font-semibold text-center">Actualizar trabajo</h2>
-            <div class="mb-4">
-              <label for="type" class="block mb-2 font-bold text-gray-700"
-                >Tipo de trabajo</label
-              >
-              <select
-                id="type"
-                name="type"
-                class="w-full px-3 py-2 border rounded"
-                required
-                v-model="form.type"
-              >
-                <option value="Tiempo-completo">Tiempo completo</option>
-                <option value="Medio-tiempo">Medio tiempo</option>
-                <option value="Remoto">Remoto</option>
-                <option value="Internado">Internado</option>
-              </select>
-            </div>
-            <div class="mb-4">
-                <label class="block mb-2 font-bold text-gray-700">Lista de tipos de trabajos</label>
-                <input
-                type="text"
-                id="name"
-                name="name"
-                class="w-full px-3 py-2 mb-2 border rounded "
-                placeholder="Ejemplo: Desarrollador frontend"
-                required
-                v-model="form.title"
-                />
-            </div>
-            <div class="mb-4">
-              <label
-                for="description"
-                class="block mb-2 font-bold text-gray-700"
-                >Descripcion</label
-              >
-              <textarea
-                id="description"
-                name="description"
-                class="w-full px-3 py-2 border rounded"
-                rows="4"
-                placeholder="Adicione cualquier tarea, expectativas, requisitos, etc"
-                v-model='form.description'
-              ></textarea>
-            </div>
+  <section class="bg-green-50">
+    <div class="container max-w-2xl py-24 m-auto">
+      <div class="px-6 py-8 m-4 mb-4 bg-white border rounded-md shadow-md md:m-0">
+        <form @submit.prevent="saveData">
+          <h2 class="mb-6 text-3xl font-semibold text-center">Editar trabajo</h2>
+          <InputBlock labeltext="type de trabajo">
+            <select id="type" name="type" class="w-full px-3 py-2 border rounded" required v-model="type">
+              <option v-for="(opt, idx) in types" :key="idx" :value="opt.value">{{ opt.text }}</option>
+            </select>
+          </InputBlock>
 
-            <div class="mb-4">
-              <label for="type" class="block mb-2 font-bold text-gray-700"
-                >Salario</label
-              >
-              <select
-                id="salary"
-                name="salary"
-                class="w-full px-3 py-2 border rounded"
-                required
-                v-model="form.salary"
-              >
-                <option value="Debajo de $500 mlc">Debajo de $500 mlc</option>
-                <option value="$500 mlc - $600 mlc">$500 mlc - $600 mlc</option>
-                <option value="$600 mlc - $700 mlc">$600 mlc - $700 mlc</option>
-                <option value="$700 mlc - $800 mlc">$700 mlc - $800 mlc</option>
-                <option value="$800 mlc - $900 mlc">$800 mlc - $900 mlc</option>
-                <option value="$900 mlc - $1000 mlc">$900 mlc - $1000 mlc</option>
-                <option value="$1000 mlc - $1250 mlc">$1000 mlc - $1250 mlc</option>
-                <option value="$1250 mlc - $1500 mlc">$1250 mlc - $1500 mlc</option>
-                <option value="$1500 mlc - $1750 mlc">$1500 mlc - $1750 mlc</option>
-                <option value="$1750 mlc - $2000 mlc">$1750 mlc - $2000 mlc</option>
-                <option value="Mas de $2000 mlc">Mas de $2000 mlc</option>
-              </select>
-            </div>
+          <InputBlock labeltext="Tipo de trabajos">
+            <input type="text" id="title" name="title" class="w-full px-3 py-2 mb-2 border rounded "
+              placeholder="Ejemplo: Desarrollador frontend" required v-model="title" />
+            <template v-slot:error>
+              <ErrorMessage :message="errors.title" />
+            </template>
+          </InputBlock>
 
-            <div class="mb-4">
-              <label class="block mb-2 font-bold text-gray-700">
-                Localizacion
-              </label>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                class="w-full px-3 py-2 mb-2 border rounded"
-                placeholder="Company Location"
-                required
-                v-model="form.location"
-              />
-            </div>
+          <InputBlock labeltext="Descripcion del trabajo">
+            <textarea id="description" name="description" class="w-full px-3 py-2 border rounded" rows="4"
+              placeholder="Adicione cualquier tarea, expectativas, requisitos, etc" v-model='description'></textarea>
+            <template v-slot:error>
+              <ErrorMessage :message="errors.description" />
+            </template>
+          </InputBlock>
 
-            <h3 class="mb-5 text-2xl">Informacion de la compania</h3>
 
-            <div class="mb-4">
-              <label for="company" class="block mb-2 font-bold text-gray-700"
-                >nombre de la compania </label
-              >
-              <input
-                type="text"
-                id="company"
-                name="company"
-                class="w-full px-3 py-2 border rounded"
-                placeholder="Company Name"
-                v-model="form.company.name"
-              />
-            </div>
+          <InputBlock labeltext="Salario">
+            <select id="salary" name="salary" class="w-full px-3 py-2 border rounded" required v-model="salary">
+              <option v-for="(opt, idx) in salaries" :key="idx" :value="opt.value">{{ opt.text }}</option>
+            </select>
+          </InputBlock>
 
-            <div class="mb-4">
-              <label
-                for="company_description"
-                class="block mb-2 font-bold text-gray-700"
-                >Descripcion de la compania</label
-              >
-              <textarea
-                id="company_description"
-                name="company_description"
-                class="w-full px-3 py-2 border rounded"
-                rows="4"
-                placeholder="What does your company do?"
-                v-model="form.company.description"
-              ></textarea>
-            </div>
+          <h3 class="mb-5 text-2xl">Informacion de la compania</h3>
+          <InputBlock labeltext="Nombre de la compania">
+            <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded"
+              placeholder="Nombre de la compania" v-model="name" />
+            <template v-slot:error>
+              <ErrorMessage :message="errors.name" />
+            </template>
+          </InputBlock>
 
-            <div class="mb-4">
-              <label
-                for="contact_email"
-                class="block mb-2 font-bold text-gray-700"
-                >Email de la compania</label
-              >
-              <input
-                type="email"
-                id="contact_email"
-                name="contact_email"
-                class="w-full px-3 py-2 border rounded"
-                placeholder="Email address for applicants"
-                required
-                v-model="form.company.contactEmail"
-              />
-            </div>
-            <div class="mb-4">
-              <label
-                for="contact_phone"
-                class="block mb-2 font-bold text-gray-700"
-                >Telefono de la compania </label
-              >
-              <input
-                type="tel"
-                id="contact_phone"
-                name="contact_phone"
-                class="w-full px-3 py-2 border rounded"
-                placeholder="Optional phone for applicants"
-                v-model="form.company.contactPhone"
-              />
-            </div>
+          <InputBlock labeltext="Descripcion de la compania">
+            <textarea id="company_description" name="company_description" class="w-full px-3 py-2 border rounded"
+              rows="4" placeholder="Que hace su compania" v-model="cdescription"></textarea>
+            <template v-slot:error>
+              <ErrorMessage :message="errors.cdescription" />
+            </template>
+          </InputBlock>
 
-            <div>
-              <button
-                class="w-full px-4 py-2 font-bold text-white bg-green-500 rounded-full hover:bg-green-600 focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Actualizar Trabajo
-              </button>
-            </div>
-          </form>
-        </div>
+          <InputBlock labeltext="Direccion">
+            <input type="text" id="location" name="location" class="w-full px-3 py-2 mb-2 border rounded"
+              placeholder="Direccion de la compania" required v-model="location" />
+            <template v-slot:error>
+              <ErrorMessage :message="errors.location" />
+            </template>
+          </InputBlock>
+
+
+          <InputBlock labeltext="Email de la compania">
+            <input type="email" id="contact_email" name="contact_email" class="w-full px-3 py-2 border rounded"
+              placeholder="Direccion de correo electronico para los solicitantes" required v-model="contactEmail" />
+            <template v-slot:error>
+              <ErrorMessage :message="errors.contactEmail" />
+            </template>
+          </InputBlock>
+
+          <InputBlock labeltext="Telefono de la compania">
+            <input type="text" id="contact_phone" name="contact_phone" class="w-full px-3 py-2 border rounded"
+              placeholder="Telefono para los solicitantes" v-model="contactPhone" />
+            <template v-slot:error>
+              <ErrorMessage :message="errors.contactPhone" />
+            </template>
+          </InputBlock>
+
+          <SubmitButton>Guardar Trabajo</SubmitButton>
+        </form>
       </div>
-    </section>
+    </div>
+  </section>
 </template>

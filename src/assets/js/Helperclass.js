@@ -1,6 +1,6 @@
 export default class Initializer {
   constructor() {
-    this.type = "Tiempo-completo";
+    this.tipo = "Tiempo-completo";
     this.title = "";
     this.description = "";
     this.salary = "Debajo de $500 mlc";
@@ -14,7 +14,7 @@ export default class Initializer {
   }
   getInitializedData() {
     return {
-      type: this.type,
+      tipo: this.tipo,
       title: this.title,
       description: this.description,
       salary: this.salary,
@@ -24,7 +24,7 @@ export default class Initializer {
   }
   generateNewFiledData(form) {
     return {
-      type: form.type,
+      tipo: form.tipo,
       title: form.title,
       description: form.description,
       salary: form.salary,

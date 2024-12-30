@@ -123,6 +123,34 @@
         "contactEmail": "asasas@asd.mv",
         "contactPhone": "1212121212"
       }
+    },
+    {
+      "type": "Tiempo-completo",
+      "title": "",
+      "description": "",
+      "salary": "Debajo de $500 mlc",
+      "location": "",
+      "company": {
+        "name": "",
+        "description": "",
+        "contactEmail": "",
+        "contactPhone": ""
+      },
+      "id": "3bac"
+    },
+    {
+      "type": "Medio-tiempo",
+      "title": "Desarrollador de python",
+      "salary": "$500 mlc - $600 mlc",
+      "description": "Programador de python",
+      "location": "La Habana Cuba",
+      "company": {
+        "name": "Python company",
+        "description": "Disenadores de python.",
+        "contactEmail": "lahabana@gmail.com",
+        "contactPhone": "22222222"
+      },
+      "id": "a8e4"
     }
   ]
 }
